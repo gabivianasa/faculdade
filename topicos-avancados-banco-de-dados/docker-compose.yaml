@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: semestre-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: semestre
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./criar-banco.sql:/docker-entrypoint-initdb.d/criar-banco.sql
+
+  php:
+    build: .
+    container_name: semestre-php
+    volumes:
+      - ./semestre/:/var/www/html/
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    environment:
+      - PHP_EXTENSIONS=pdo_mysql
+
+volumes:
+  mysql_data:
