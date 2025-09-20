@@ -12,6 +12,7 @@
 
 # Package files
 *.jar
+!projeto-config/*.jar
 *.war
 *.nar
 *.ear
