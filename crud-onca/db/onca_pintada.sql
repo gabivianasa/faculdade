@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `habitat` (
   `clima` varchar(80) NOT NULL,
   `descricao_habitat` longtext DEFAULT NULL,
   PRIMARY KEY (`id_habitat`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `monitoramento` (
   PRIMARY KEY (`id_monitoramento`),
   KEY `id_onca` (`id_onca`),
   KEY `id_habitat` (`id_habitat`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `onca` (
   `in_viva` tinyint(1) DEFAULT 1,
   `id_habitat` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_onca`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Pesquisador
@@ -133,6 +133,7 @@ CREATE TRIGGER `trg_after_insert_onca` AFTER INSERT ON `onca` FOR EACH ROW BEGIN
 END
 $$
 DELIMITER ;
+
 DROP TRIGGER IF EXISTS `trg_after_update_onca`;
 DELIMITER $$
 CREATE TRIGGER `trg_after_update_onca` AFTER UPDATE ON onca
@@ -142,9 +143,8 @@ BEGIN
     DECLARE total_femeas INT DEFAULT 0;
 
     -- Executa apenas se a onça foi marcada como morta
---     IF OLD.in_viva = 1 AND NEW.in_viva = 0 THEN
-       IF OLD.in_viva <> NEW.in_viva THEN
-
+    -- IF OLD.in_viva = 1 AND NEW.in_viva = 0 THEN
+    -- IF OLD.in_viva <> NEW.in_viva THEN
         -- Conta todos os machos vivos
         SELECT COUNT(*) INTO total_machos
         FROM onca
@@ -160,7 +160,15 @@ BEGIN
         SET
             quantidade_machos_brasil = total_machos,
             quantidade_femeas_brasil = total_femeas;
-    END IF;
+    -- END IF;
+
+    UPDATE monitoramento
+    SET
+    	nome = NEW.nome,
+    	sexo = NEW.sexo,
+    	idade = NEW.idade,
+    	id_habitat = NEW.id_habitat
+    WHERE id_onca = NEW.id_onca;
 END
 $$
 DELIMITER ;
