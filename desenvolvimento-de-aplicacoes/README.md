@@ -1,4 +1,4 @@
-# Trabalho - Aplicações WEB
+# Trabalho - Desenvolvimento de aplicações WEB
 
 # Doação Sangue Web
 
