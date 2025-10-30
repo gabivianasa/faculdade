@@ -1,0 +1,18 @@
+:host {
+  .background-login {
+    background: radial-gradient(circle, #990000 0%, #660000 60%, #330000 100%);
+
+  }
+  mat-card {
+    height: 18.75rem;
+    width: 21.875rem;
+
+    mat-card-actions{
+      div{
+        button {
+          width: 9.375rem;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+<div class="background-login">
+  @if (carregando()) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+  
+  <div class="d-flex flex-column justify-content-center align-items-center vh-100">
+    <mat-card appearance="outlined">
+      <mat-card-header class="d-flex flex-column align-items-center">
+        <mat-card-title>Login</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div
+          [formGroup]="formLogin"
+          class="d-flex flex-column align-items-center mt-5">
+          <mat-form-field class="w-100 mb-2">
+            <mat-label>E-mail</mat-label>
+            <input
+              matInput
+              placeholder="email@email.com"
+              formControlName="email"
+              (blur)="updateErrorMessage()"
+              required
+            />
+            @if (email.invalid) {
+              <mat-error>{{errorMessage()}}</mat-error>
+            }
+          </mat-form-field>
+          
+          <mat-form-field class="w-100">
+            <mat-label>Senha</mat-label>
+            <input
+              matInput
+              formControlName="senha"
+              [type]="esconderSenha() ? 'password' : 'text'" />
+            <button
+              matIconButton
+              matSuffix
+              (click)="mostrarEsconderSenha($event)"
+              [attr.aria-label]="'Esconder password'"
+              [attr.aria-pressed]="esconderSenha()">
+              <mat-icon>{{esconderSenha() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            @if (senha.hasError('required')) {
+              <mat-error>Campo obrigatório</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="d-flex align-items-center justify-content-center w-100">
+          <button
+            matButton="filled"
+            [disabled]="formLogin.invalid"
+            (click)="efetuarLogin()">Entrar</button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

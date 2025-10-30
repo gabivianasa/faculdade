@@ -1,0 +1,134 @@
+<div [formGroup]="formGroup">
+  <div class="row">
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <mat-label>Nome</mat-label>
+        <input
+          matInput
+          maxlength="200"
+          formControlName="nome"
+          required>
+        @if (nome.hasError('required')) {
+          <mat-error>Campo obrigatório</mat-error>
+        }
+        @if (nome.hasError('maxlength')) {
+          <mat-error>Valor máximo de caracteres: 200</mat-error>
+        }
+      </mat-form-field>
+    </div>
+  
+    <div class="col-3">
+      <mat-form-field class="w-100">
+        <mat-label>E-mail</mat-label>
+        <input
+          type="email"
+          maxlength="200"
+          formControlName="email"
+          required
+          matInput>
+        @if (email.hasError('required')) {
+          <mat-error>Campo obrigatório</mat-error>
+        }
+        @if (email.hasError('maxlength')) {
+          <mat-error>Valor máximo de caracteres: 200</mat-error>
+        }
+        @if (email.hasError('email')) {
+          <mat-error>E-mail inválido</mat-error>
+        }
+      </mat-form-field>
+    </div>
+  
+    <div class="col-2">
+      <mat-form-field class="w-100">
+        <mat-label>Data de nascimento</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          required
+          [max]="dataMaxima()"
+          formControlName="dataNascimento">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        @if (dataNascimento.hasError('required')) {
+          <mat-error>Campo obrigatório</mat-error>
+        }
+      </mat-form-field>
+    </div>
+  
+    <div class="col">
+      <div class="mt-2">
+        <mat-radio-group formControlName="sexo" required aria-label="Selecione uma opção">
+          <mat-radio-button value="F">Feminino</mat-radio-button>
+          <mat-radio-button value="M">Masculino</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mt-3">
+    <div class="col-2">
+      <mat-form-field class="w-100">
+        <mat-label>Tipo sanguíneo</mat-label>
+        <mat-select formControlName="tipoSanguineo" required>
+          @for (tipo of tiposSanguineos(); track tipo) {
+            <mat-option [value]="tipo">{{ tipo }}</mat-option>
+          }
+        </mat-select>
+        @if (tipoSanguineo.hasError('required')) {
+          <mat-error>Campo obrigatório</mat-error>
+        }
+      </mat-form-field>
+    </div>
+  
+    <div class="col-5">
+      <mat-form-field class="w-100">
+        <mat-label>Doenças</mat-label>
+        <textarea
+          rows="1"
+          maxlength="255"
+          matInput
+          required
+          formControlName="doencas"
+          #txtArea></textarea>
+        <mat-hint align="end">{{ txtArea.value.length }}/255</mat-hint>
+        @if (doencas.hasError('required')) {
+          <mat-error>Campo obrigatório</mat-error>
+        }
+      </mat-form-field>
+    </div>
+  
+    <div class="col-2">
+      <mat-form-field class="w-100">
+        <mat-label>Peso (kg)</mat-label>
+        <input
+          matInput
+          type="number"
+          step="0.01"
+          min="0.01"
+          required
+          formControlName="peso"
+          placeholder="Ex: 70.5"/>
+        @if (peso.hasError('required')) {
+          <mat-error>Campo obrigatório</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    
+    <div class="col-2">
+      <mat-form-field class="w-100">
+        <mat-label>Altura (m)</mat-label>
+        <input
+          matInput
+          type="number"
+          step="0.01"
+          min="0.01"
+          required
+          formControlName="altura"
+          placeholder="Ex: 1.75"/>
+        @if (altura.hasError('required')) {
+          <mat-error>Campo obrigatório</mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </div>
+</div>

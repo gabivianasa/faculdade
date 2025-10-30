@@ -1,0 +1,29 @@
+<mat-toolbar class="d-flex align-items-center primary-bg primary-color">
+  <a
+    class="d-flex align-items-center mr-5 text-decoration-none primary-color"
+    [routerLink]="'/home'"><mat-icon class="sangue mr-2">bloodtype</mat-icon> Doação de sangue
+  </a>
+  <a
+    matIconButton
+    class="mr-3"
+    [routerLink]="'/cadastro/doador'"
+    matTooltip="Página de doadores de sangue"
+    aria-label="Doadores de sangue">
+    <mat-icon class="primary-color">person_add</mat-icon>
+  </a>
+  <a
+    matIconButton
+    aria-label="Agendamento dos doadores de sangue"
+    matTooltip="Página de agendamento dos doadores de sangue"
+    [routerLink]="'/cadastro/agendamento'">
+    <mat-icon class="primary-color">event_available</mat-icon>
+  </a>
+  <span class="flex-fill"></span>
+  <button
+    matIconButton
+    aria-label="Logout"
+    matTooltip="Logout"
+    (click)="logout()">
+    <mat-icon class="primary-color">logout</mat-icon>
+  </button>
+</mat-toolbar>

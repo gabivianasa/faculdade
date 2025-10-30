@@ -1,0 +1,71 @@
+<div [formGroup]="formGroup">
+  <div class="row">
+    <div class="col-5">
+      <div class="d-flex">
+        <mat-form-field class="w-100 mr-3">
+          <mat-label>Data</mat-label>
+          <input
+            matInput
+            [min]="dataMinima()"
+            [value]="dataHora"
+            (dateChange)="atualizarData($event.value)"
+            [matDatepicker]="datepicker"
+            formControlName="dataHora">
+          <mat-datepicker #datepicker/>
+          <mat-datepicker-toggle [for]="datepicker" matSuffix/>
+
+          @if (dataHora.hasError('required') && dataHora.touched) {
+            <mat-error>Campo obrigatório</mat-error>
+          }
+        </mat-form-field>
+        
+        <mat-form-field class="w-100">
+          <mat-label>Hora</mat-label>
+          <input
+            matInput
+            [matTimepicker]="timepicker"
+            formControlName="dataHora">
+          <mat-timepicker #timepicker/>
+          <mat-timepicker-toggle [for]="timepicker" matSuffix/>
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <div class="col">
+      <mat-form-field class="w-100">
+        <mat-label>Unidade</mat-label>
+        <input
+          maxlength="200"
+          formControlName="unidade"
+          required
+          matInput>
+        @if (unidade.hasError('required')) {
+          <mat-error>Campo obrigatório</mat-error>
+        }
+        @if (unidade.hasError('maxlength')) {
+          <mat-error>Valor máximo de caracteres: 200</mat-error>
+        }
+      </mat-form-field>
+    </div>
+  
+    <div class="col">
+      @if (carregando()) {
+        <div class="mt-5 d-flex align-items-center justify-content-center w-100">
+          <mat-spinner [diameter]="40"></mat-spinner>
+        </div>
+      } @else {
+        <mat-form-field class="w-100">
+          <mat-label>Doador(es)</mat-label>
+          <mat-select formControlName="doadorIds" [compareWith]="compararDoador" required>
+            @for (doador of listaDoadores(); track doador.id) {
+              <mat-option [value]="doador">{{ doador.nome }}</mat-option>
+            }
+          </mat-select>
+          @if (doadorIds.hasError('required')) {
+            <mat-error>Campo obrigatório</mat-error>
+          }
+        </mat-form-field>
+      }
+    </div>
+  </div>
+</div>

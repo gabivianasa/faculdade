@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Dados do doador</h2>
+<mat-dialog-content>
+  @if (carregando()) {
+    <div class="d-flex align-items-center justify-content-center">
+      <mat-spinner [diameter]="40" />
+    </div>
+  } @else {
+    <mat-list>
+      <div mat-subheader>Doador</div>
+      <mat-list-item>
+        <mat-icon matListItemIcon>person</mat-icon>
+        <div matListItemTitle>Nome: {{ dadosDoador()?.nome }}</div>
+        <div matListItemLine>E-mail: {{ dadosDoador()?.email }}</div>
+        <div matListItemLine>Data de nascimento: {{ dadosDoador()?.dataNascimento | date: 'dd/MM/yyyy'}} / Sexo: {{ dadosDoador()?.sexo === 'F' ? 'FEMININO' : 'MASCULINO' }}</div>
+      </mat-list-item>
+      <mat-divider class="my-2"></mat-divider>
+      <mat-list-item>
+        <mat-icon matListItemIcon>medical_information</mat-icon>
+        <div matListItemTitle>Tipo sanguíneo: {{ dadosDoador()?.tipoSanguineo }}</div>
+        <div matListItemLine>Altura: {{ dadosDoador()?.altura }} cm / Peso: {{ dadosDoador()?.peso }} kg</div>
+        <div matListItemLine>Doença(s): {{ dadosDoador()?.doencas }}</div>
+      </mat-list-item>
+    </mat-list>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button matButton="filled" mat-dialog-close>Fechar</button>
+</mat-dialog-actions>

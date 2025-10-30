@@ -1,0 +1,28 @@
+<mat-card class="mt-5 mb-3">
+  <mat-card-header class="d-flex align-items-center">
+    <h3 class="fw-normal">Atualização de agendamento</h3>
+    <div class="flex-fill"></div>
+    <button
+      class="mr-3"
+      matButton="outlined"
+      (click)="voltarParaPaginaAnterior()">Voltar
+    </button>
+
+    <button
+      matButton="filled"
+      [disabled]="carregando() || formGroup.invalid"
+      (click)="atualizarAgendamento()">Atualizar
+    </button>
+  </mat-card-header>
+  @if(carregando()) {
+    <div class="mt-5 d-flex align-items-center justify-content-center w-100">
+      <mat-spinner [diameter]="40"></mat-spinner>
+    </div>
+  } @else {
+    <div class="p-4">
+      <gabi-formulario-agendamento [formGroup]="formGroup" />
+    </div>
+  }
+  <mat-card-content>
+  </mat-card-content>
+</mat-card>
